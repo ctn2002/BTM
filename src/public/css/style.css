@@ -112,7 +112,7 @@ footer {
   border-radius: 12px;
   height: 400px;
   min-width: 20%;
-  background-color: #dadada; }
+  background-color: gray; }
 
 .login .login-title {
   font-weight: 700;
@@ -123,16 +123,15 @@ footer {
   margin-top: 1rem;
   font-size: 0.85rem;
   font-weight: 600;
-  width: 200px;
+  width: 400px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start; }
 
 .login input {
-  border: none;
   padding: 0.35rem;
   font-family: "Inter", sans-serif;
-  margin: 0.75rem 0;
+  margin: 1rem 0;
   border-radius: 4px;
   width: 100%; }
 

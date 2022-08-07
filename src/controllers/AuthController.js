@@ -89,7 +89,7 @@ const authController = {
         Book.find({})
           .then((books) => {
             books = multipleMongooseToObject(books);
-            return res.render("home", { books });
+            return res.render("userhome", { books });
           })
           .catch((err) => console.log(err));
       }

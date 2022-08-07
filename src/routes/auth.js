@@ -4,7 +4,7 @@ import middlewareController from "../controllers/MiddlewareController";
 const router = express.Router();
 
 router.post("/register", authController.register);
-router.post("/login", authController.login);
+router.post("/userhome", authController.login);
 router.post("/refresh", authController.requestRefreshToken);
 router.post("/logout", authController.logout);
 
