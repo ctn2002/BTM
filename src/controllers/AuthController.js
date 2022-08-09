@@ -10,17 +10,60 @@ let refreshTokens = [];
 
 const authController = {
   register: async (req, res, next) => {
-    try {
-      const findUser = await Account.findOne({ email: req.body.email });
-      if (findUser) {
-        return res.json("Account is ready");
-      }
-      const salt = await bcrypt.genSalt(10);
-      const hashed = await bcrypt.hash(req.body.password, salt);
+    let email = req.body.email;
+    let password = req.body.password;
+    let repassword = req.body.repassword;
+    let kyTuThuong = false;
+    let kyTuHoa = false;
+    let kyTuSo = false;
+    let kyTuDacBiet = false;
+    let emailHopLe = false;
 
+    try {
+      const findUser = await Account.findOne({ email: email });
+      if (findUser) {
+        return res.json("Tài khoản này đã tồn tại");
+      }
+
+      for(let i = 0; i < password.length; i++){
+        if(password[i] >= 'a' && password[i] <= 'z'){
+          kyTuThuong = true;
+        } else{
+           if(password[i] >= 'A' && password[i] <= 'Z'){
+             kyTuHoa = true;
+            } else{
+               if(password[i] >= 0 && password[i] <= 9){
+                 kyTuSo = true;
+                 }
+                 else {
+                  kyTuDacBiet = true;
+                 }
+                }
+              }
+      }
+
+      if(email.search("gmail.com") == -1 || email.lastIndexOf("gmail.com") + 9 != email.length){
+        return res.json("Email không đúng định dạng");
+      }
+
+      if(!kyTuThuong || !kyTuHoa || !kyTuSo || kyTuDacBiet){
+        return res.json("Mật khẩu sai định dạng. Mật khẩu có độ dài từ 8-16 ký tự và có tối thiểu 1 ký tự thường 1 ký tự hoa và 1 ký tự số.");
+      }
+
+      if(password != repassword){
+        return res.json("Mật khẩu không khớp");
+      }
+
+      if(password.length < 8 || password.length > 16){
+        return res.json("Mật khẩu sai định dạng. Mật khẩu có độ dài từ 8-16 ký tự và có tối thiểu 1 ký tự thường 1 ký tự hoa và 1 ký tự số.");
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(password, salt);
+      
       // create new user
       const newUser = await new Account({
-        email: req.body.email,
+        email: email,
         password: hashed,
       });
 
@@ -28,7 +71,7 @@ const authController = {
       const user = await newUser.save();
       return res.status(200).render("login");
     } catch (error) {
-      res.status(500).json(err);
+      res.status(500).json(error);
     }
   },
 
@@ -58,14 +101,14 @@ const authController = {
     try {
       const user = await Account.findOne({ email: req.body.email });
       if (!user) {
-        return res.status(404).json("wrong email");
+        return res.status(404).json("Email không tồn tại");
       }
       const validPassword = await bcrypt.compare(
         req.body.password,
         user.password
       );
       if (!validPassword) {
-        return res.status(404).json("wrong password");
+        return res.status(404).json("Sai mật khẩu");
       }
 
       if (user && validPassword) {
@@ -139,6 +182,15 @@ const authController = {
       })
       .catch((err) => console.log(err));
   },
+
+  forgot: async(req,res) => {
+    try{
+      render("confirmforgot");
+    } catch (error){
+      res.json(error);
+    }
+  }
+
 };
 
 module.exports = authController;

@@ -3,10 +3,9 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const adminSchema = new Schema({
-  email: { type: String, maxLength: 100 },
-  password: { type: String, maxLength: 50 },
-  name: { type: String, maxLength: 100 },
-  address: { type: String, maxLength: 100 },
+  email: { type: String, maxLength: 256 },
+  name: { type: String, maxLength: 40 },
+  address: { type: String, maxLength: 120 },
   phone: { type: String, maxLength: 15 },
   birth: { type: Date },
   gender: { type: String, maxLength: 5 },

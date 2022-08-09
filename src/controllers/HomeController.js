@@ -18,6 +18,10 @@ class HomeController {
   register(req, res, next) {
     res.render("register");
   }
+
+  forgot(req, res, next) {
+    res.render("forgot");
+  }
 }
 
 module.exports = new HomeController();
