@@ -1,41 +1,45 @@
-<div class=".container-fluid p-4">
-  <div class="row d-flex">
+{{#each book}}
+  <div class=".container-fluid p-4">
+    <div class="row d-flex">
 
-    <div class="col-6 p-4 border-2">
-      <img
-        class="img-fluid"
-        width="300"
-        src="./image/anh-test.png"
-        alt="Card image cap"
-      />
+      <div class="col-6 p-4 border-2">
+        <img
+          class="img-fluid"
+          width="300"
+          src="{{this.image}}"
+          alt="{{this.nameBook}}"
+        />
+      </div>
+      <div class="col-1"></div>
+      <div class="col-5 p-4 border-3">
+        <h3>Tên sách: {{this.nameBook}}</h3>
+        <h4>Tên tác giả: {{this.author}}</h4>
+        <h4>Thể loại: {{this.genres}}</h4>
+
+      </div>
+
+      <div class="col-12">
+        <hr />
+        <h3><b>Mô tả</b></h3>
+        <p>{{this.description}}</p>
+        <hr />
+      </div>
+      <div class="col-12 d-flex justify-content-center p-4">
+
+        Đọc sách:<a
+          class="btn btn-primary ml-3"
+          href="#"
+          role="button"
+        >Read</a></div>
+      <div class="col-12 d-flex justify-content-center p-4">Tải sách:
+        <a
+          class="btn btn-success ml-3"
+          href="{{this.urlDownload}}"
+          role="button"
+        >Download</a></div>
+      <div class="col-12 d-flex justify-content-center p-4">Mua sách:
+        <a class="btn btn-info ml-3" href="#" role="button">Buy</a></div>
     </div>
-    <div class="col-1"></div>
-    <div class="col-5 p-4 border-3">
-      <h3>Name book: ABC</h3>
-      <h4>Name author: ABC</h4>
-      <h4>Year: 2000</h4>
-
-    </div>
-
-    <div class="col-12">
-      <hr />
-      <h3><b>Description</b></h3>
-      <p>An author is a professional individual responsible for developing
-        creative stories published in formats such as books, movies, or
-        television scripts. Authors conduct research of information that may be
-        included in their works, whether they are fictional or non-fictional.</p>
-      <hr />
-    </div>
-    <div class="col-12 d-flex justify-content-center p-4">
-
-      Read book:<a
-        class="btn btn-primary ml-3"
-        href="#"
-        role="button"
-      >Read</a></div>
-    <div class="col-12 d-flex justify-content-center p-4">Download:
-      <a class="btn btn-success ml-3" href="#" role="button">Download</a></div>
-    <div class="col-12 d-flex justify-content-center p-4">Buy book:
-      <a class="btn btn-info ml-3" href="#" role="button">Buy</a></div>
   </div>
-</div>
+
+{{/each}}

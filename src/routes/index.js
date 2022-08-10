@@ -3,6 +3,7 @@ import adminRouter from "../controllers/AdminController";
 import genresRouter from "./genres";
 import authRouter from "./auth";
 import middlewareController from "../controllers/MiddlewareController";
+import Book from "../models/Book";
 
 let initHomeRoutes = (app) => {
   app.use("/", authRouter);
@@ -14,6 +15,10 @@ let initHomeRoutes = (app) => {
 
   app.get("/confirmforgot", (req, res) =>{
     res.render('confirmforgot');
+  })
+
+  app.get("/changeforgot", (req, res) =>{
+    res.render('changeforgot');
   })
 
   app.get("/search", async (req, res) => {

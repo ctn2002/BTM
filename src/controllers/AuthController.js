@@ -41,9 +41,11 @@ const authController = {
                 }
               }
       }
-
-      if(email.search("gmail.com") == -1 || email.lastIndexOf("gmail.com") + 9 != email.length){
-        return res.json("Email không đúng định dạng");
+      
+      for(let i = 0; i < password.length; i++){
+        if(password[i] == ' '){
+          return res.json("Mật khẩu sai định dạng. Mật khẩu có độ dài từ 8-16 ký tự và có tối thiểu 1 ký tự thường 1 ký tự hoa và 1 ký tự số.");
+        }
       }
 
       if(!kyTuThuong || !kyTuHoa || !kyTuSo || kyTuDacBiet){
@@ -56,6 +58,10 @@ const authController = {
 
       if(password.length < 8 || password.length > 16){
         return res.json("Mật khẩu sai định dạng. Mật khẩu có độ dài từ 8-16 ký tự và có tối thiểu 1 ký tự thường 1 ký tự hoa và 1 ký tự số.");
+      }
+
+      if(email.lastIndexOf("@gmail.com") + 10 != email.length){
+        return res.json("Email không hợp lệ");
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -183,13 +189,34 @@ const authController = {
       .catch((err) => console.log(err));
   },
 
-  forgot: async(req,res) => {
+  forgot: async(req , res) => {
+    let email = req.body.forgotemail;
+    const findUser = await Account.findOne({ email: email });
+      if (!findUser) {
+        return res.json("Tài khoản này không tồn tại");
+      }
     try{
-      render("confirmforgot");
+      res.render("confirmforgot");
     } catch (error){
       res.json(error);
     }
-  }
+  },
+
+  confirmforgot: async(req,res) => {
+    try{
+      res.render("changepassword"); 
+    } catch (error){
+      res.json(error);
+    }
+  },
+
+  changepassword: async(req,res) => {
+    try{
+      res.render("login");
+    } catch (error){
+      res.json(error);
+    }
+  },
 
 };
 
